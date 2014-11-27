@@ -1,4 +1,4 @@
-krzysztof_custom_user_homepage:
+homepage:
     path:     /customuser/{name}
     defaults: { _controller: KrzysztofCustomUserBundle:Default:index }
 

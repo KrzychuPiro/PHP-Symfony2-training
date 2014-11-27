@@ -18,11 +18,6 @@ class DefaultController extends Controller
 {
     public function registerAction()
     {
-        /*$registration = new Registration();
-        $form = $this->createForm(new RegistrationType(), $registration, array(
-            'action' => $this->generateUrl('account_create'),
-        ));*/
-
         $user = new CustomUser();
         $form = $this->createForm(new CustomUserType(), array('action' => $this->generateUrl('account_create'), 'user' => $user));
 
@@ -33,41 +28,17 @@ class DefaultController extends Controller
             $data = $form->getData();
 
             if ($form->isValid()) {
-                // the validation passed, do something with the $user object
                 $factory = $this->get('security.encoder_factory');
                 $encoder = $factory->getEncoder($user);
-                $password = $encoder->encodePassword($data['password'], $user->getSalt());
+                $password = $encoder->encodePassword($data['password'], null);
                 $user->setUsername($data['username']);
                 $user->setPassword($password);
                 $user->setEmail(($user->getUsername() . "@mail"));
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($user);
                 $em->flush();
-                return $this->redirect("http://localhost:8000/app_dev.php/demo/");
+                return $this->redirect("http://localhost:8000/app_dev.php/customuser/Tina");
             }
-        }
-
-        return $this->render(
-            'KrzysztofCustomUserBundle:Account:register.html.twig',
-            array('form' => $form->createView())
-        );
-    }
-
-    public function createAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $form = $this->createForm(new RegistrationType(), new Registration());
-
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $registration = $form->getData();
-
-            $em->persist($registration->getUser());
-            $em->flush();
-
-            return $this->redirect("/demo/secured/login");
         }
 
         return $this->render(
