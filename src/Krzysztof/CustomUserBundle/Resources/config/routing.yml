@@ -1,0 +1,11 @@
+krzysztof_custom_user_homepage:
+    path:     /customuser/{name}
+    defaults: { _controller: KrzysztofCustomUserBundle:Default:index }
+
+account_register:
+    path:     /register
+    defaults: { _controller: KrzysztofCustomUserBundle:Default:register }
+
+account_create:
+    path:     /register/create
+    defaults: { _controller: KrzysztofCustomUserBundle:Default:create }
